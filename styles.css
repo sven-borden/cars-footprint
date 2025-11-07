@@ -1,0 +1,142 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Container */
+.container {
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Vehicle Grid */
+.vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem;
+}
+
+/* Vehicle Card */
+.vehicle-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.vehicle-card h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+/* Vehicle Rectangle (Aerial View) */
+.vehicle {
+    position: relative;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Scale: 1mm = 0.04px */
+/* Skoda Citigo: 3597mm × 1645mm */
+.skoda-citigo {
+    width: 143.88px;
+    height: 65.8px;
+    background-color: #e74c3c;
+}
+
+/* Tesla Model 3: 4720mm × 1850mm */
+.tesla-model3 {
+    width: 188.8px;
+    height: 74px;
+    background-color: #3498db;
+}
+
+/* Tesla Model Y: 4790mm × 1920mm */
+.tesla-modely {
+    width: 191.6px;
+    height: 76.8px;
+    background-color: #9b59b6;
+}
+
+/* Tesla Model S: 4978mm × 1964mm */
+.tesla-models {
+    width: 199.12px;
+    height: 78.56px;
+    background-color: #2ecc71;
+}
+
+/* Tesla Model X: 5036mm × 1999mm */
+.tesla-modelx {
+    width: 201.44px;
+    height: 79.96px;
+    background-color: #f39c12;
+}
+
+/* Hyundai Ioniq 5: 4655mm × 1890mm */
+.ioniq5 {
+    width: 186.2px;
+    height: 75.6px;
+    background-color: #1abc9c;
+}
+
+/* Vehicle Label */
+.vehicle-label {
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.dimension {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .vehicle-grid {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding: 1.5rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+}
