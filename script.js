@@ -4,36 +4,7 @@ const legend = document.getElementById('legend');
 const legendList = document.getElementById('legend-list');
 const vehicleListContainer = document.querySelector('.vehicle-list');
 
-// Vehicle data will be loaded from CSV
-let vehiclesData = [];
-
-// Parse CSV text into array of objects
-function parseCSV(csvText) {
-    const lines = csvText.trim().split('\n');
-    const headers = lines[0].split(',');
-
-    return lines.slice(1).map(line => {
-        const values = line.split(',');
-        const obj = {};
-        headers.forEach((header, index) => {
-            obj[header.trim()] = values[index].trim();
-        });
-        return obj;
-    });
-}
-
-// Load vehicles from CSV file
-async function loadVehicles() {
-    try {
-        const response = await fetch('vehicles.csv');
-        const csvText = await response.text();
-        vehiclesData = parseCSV(csvText);
-        populateVehicleList();
-        initializeEventListeners();
-    } catch (error) {
-        console.error('Error loading vehicles:', error);
-    }
-}
+// Vehicle data is loaded from vehicles-data.js
 
 // Populate the vehicle selection list
 function populateVehicleList() {
@@ -56,7 +27,7 @@ function populateVehicleList() {
     });
 }
 
-// Initialize event listeners after loading vehicles
+// Initialize event listeners
 function initializeEventListeners() {
     const checkboxes = document.querySelectorAll('.vehicle-option input[type="checkbox"]');
 
@@ -70,6 +41,10 @@ function initializeEventListeners() {
 
     updateOverlay();
 }
+
+// Initialize the application
+populateVehicleList();
+initializeEventListeners();
 
 // Function to calculate dynamic scale based on selected vehicles and container size
 function calculateScale(vehicles, containerWidth, containerHeight) {
@@ -203,6 +178,3 @@ function updateLegend(vehicles) {
         legendList.appendChild(legendItem);
     });
 }
-
-// Load vehicles from CSV and initialize the application
-loadVehicles();
