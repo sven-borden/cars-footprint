@@ -1,18 +1,75 @@
-// Get all checkboxes, overlay container, and legend elements
-const checkboxes = document.querySelectorAll('.vehicle-option input[type="checkbox"]');
+// Get overlay container and legend elements
 const overlayContainer = document.getElementById('overlay-container');
 const legend = document.getElementById('legend');
 const legendList = document.getElementById('legend-list');
+const vehicleListContainer = document.querySelector('.vehicle-list');
 
-// Vehicle name mapping
-const vehicleNames = {
-    'skoda-citigo': 'Skoda Citigo',
-    'tesla-model3': 'Tesla Model 3 2024',
-    'ioniq5': 'Hyundai Ioniq 5',
-    'tesla-modely': 'Tesla Model Y Juniper',
-    'tesla-models': 'Tesla Model S 2024',
-    'tesla-modelx': 'Tesla Model X'
-};
+// Vehicle data will be loaded from CSV
+let vehiclesData = [];
+
+// Parse CSV text into array of objects
+function parseCSV(csvText) {
+    const lines = csvText.trim().split('\n');
+    const headers = lines[0].split(',');
+
+    return lines.slice(1).map(line => {
+        const values = line.split(',');
+        const obj = {};
+        headers.forEach((header, index) => {
+            obj[header.trim()] = values[index].trim();
+        });
+        return obj;
+    });
+}
+
+// Load vehicles from CSV file
+async function loadVehicles() {
+    try {
+        const response = await fetch('vehicles.csv');
+        const csvText = await response.text();
+        vehiclesData = parseCSV(csvText);
+        populateVehicleList();
+        initializeEventListeners();
+    } catch (error) {
+        console.error('Error loading vehicles:', error);
+    }
+}
+
+// Populate the vehicle selection list
+function populateVehicleList() {
+    vehicleListContainer.innerHTML = '';
+
+    vehiclesData.forEach(vehicle => {
+        const label = document.createElement('label');
+        label.className = 'vehicle-option';
+
+        label.innerHTML = `
+            <input type="checkbox" id="${vehicle.id}" value="${vehicle.id}"
+                   data-length="${vehicle.length}" data-width="${vehicle.width}"
+                   data-color="${vehicle.color}">
+            <span class="color-indicator" style="background-color: ${vehicle.color};"></span>
+            <span class="vehicle-name">${vehicle.name}</span>
+            <span class="vehicle-dims">${parseInt(vehicle.length).toLocaleString()}mm × ${parseInt(vehicle.width).toLocaleString()}mm</span>
+        `;
+
+        vehicleListContainer.appendChild(label);
+    });
+}
+
+// Initialize event listeners after loading vehicles
+function initializeEventListeners() {
+    const checkboxes = document.querySelectorAll('.vehicle-option input[type="checkbox"]');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateOverlay);
+    });
+
+    window.addEventListener('resize', () => {
+        updateOverlay();
+    });
+
+    updateOverlay();
+}
 
 // Function to calculate dynamic scale based on selected vehicles and container size
 function calculateScale(vehicles, containerWidth, containerHeight) {
@@ -47,11 +104,12 @@ function calculateScale(vehicles, containerWidth, containerHeight) {
 // Function to update the overlay view
 function updateOverlay() {
     // Get all selected vehicles
+    const checkboxes = document.querySelectorAll('.vehicle-option input[type="checkbox"]');
     const selectedVehicles = Array.from(checkboxes)
         .filter(checkbox => checkbox.checked)
         .map(checkbox => ({
             id: checkbox.value,
-            name: vehicleNames[checkbox.value],
+            name: checkbox.parentElement.querySelector('.vehicle-name').textContent,
             length: parseInt(checkbox.dataset.length),
             width: parseInt(checkbox.dataset.width),
             color: checkbox.dataset.color
@@ -146,15 +204,5 @@ function updateLegend(vehicles) {
     });
 }
 
-// Add event listeners to all checkboxes
-checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', updateOverlay);
-});
-
-// Add resize listener to recalculate scale on window resize
-window.addEventListener('resize', () => {
-    updateOverlay();
-});
-
-// Initialize the view
-updateOverlay();
+// Load vehicles from CSV and initialize the application
+loadVehicles();
