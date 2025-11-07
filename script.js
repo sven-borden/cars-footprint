@@ -118,10 +118,13 @@ function updateOverlay() {
     const parkingSpotInteriorWidth = 2320;
     const whiteLineWidth = 120;
 
+    // Total size must include the border width on both sides
+    // With box-sizing: border-box, border is drawn inside the element
+    // So total size = interior + (2 * border width)
     const parkingSpot = document.createElement('div');
     parkingSpot.className = 'parking-spot';
-    parkingSpot.style.width = `${parkingSpotInteriorLength * scale}px`;
-    parkingSpot.style.height = `${parkingSpotInteriorWidth * scale}px`;
+    parkingSpot.style.width = `${(parkingSpotInteriorLength + 2 * whiteLineWidth) * scale}px`;
+    parkingSpot.style.height = `${(parkingSpotInteriorWidth + 2 * whiteLineWidth) * scale}px`;
     parkingSpot.style.borderWidth = `${whiteLineWidth * scale}px`;
     overlayContainer.appendChild(parkingSpot);
 
