@@ -144,36 +144,64 @@ header p {
 .overlay-vehicle {
     position: absolute;
     border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.6;
-    border: 3px solid rgba(0, 0, 0, 0.3);
-    transition: opacity 0.3s ease;
+    background-color: transparent;
+    border-width: 3px;
+    border-style: solid;
+    transition: border-width 0.3s ease;
+    box-sizing: border-box;
 }
 
 .overlay-vehicle:hover {
-    opacity: 0.9;
+    border-width: 5px;
     z-index: 10;
 }
 
-.vehicle-label {
-    color: white;
-    font-size: 0.8rem;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-    padding: 0.5rem;
+/* Legend */
+.legend {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.vehicle-label .name {
-    display: block;
-    margin-bottom: 0.25rem;
+.legend h3 {
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
 }
 
-.vehicle-label .dimension {
-    display: block;
-    font-size: 0.7rem;
+.legend-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.legend-color {
+    width: 40px;
+    height: 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 3px;
+    background-color: transparent;
+    flex-shrink: 0;
+}
+
+.legend-text {
+    color: #2c3e50;
+}
+
+.legend-dims {
+    color: #7f8c8d;
+    font-size: 0.85rem;
+    margin-left: auto;
 }
 
 /* Responsive Design */

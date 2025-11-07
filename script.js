@@ -1,9 +1,11 @@
 // Scale: 1mm = 0.04px
 const SCALE = 0.04;
 
-// Get all checkboxes and overlay container
+// Get all checkboxes, overlay container, and legend elements
 const checkboxes = document.querySelectorAll('.vehicle-option input[type="checkbox"]');
 const overlayContainer = document.getElementById('overlay-container');
+const legend = document.getElementById('legend');
+const legendList = document.getElementById('legend-list');
 
 // Vehicle name mapping
 const vehicleNames = {
@@ -31,14 +33,18 @@ function updateOverlay() {
     // Clear the overlay container
     overlayContainer.innerHTML = '';
 
-    // If no vehicles selected, show empty state
+    // If no vehicles selected, show empty state and hide legend
     if (selectedVehicles.length === 0) {
         const emptyState = document.createElement('p');
         emptyState.className = 'empty-state';
         emptyState.textContent = 'Select vehicles from the left to compare their footprints';
         overlayContainer.appendChild(emptyState);
+        legend.style.display = 'none';
         return;
     }
+
+    // Show legend
+    legend.style.display = 'block';
 
     // Create overlay for each selected vehicle
     selectedVehicles.forEach(vehicle => {
@@ -53,23 +59,44 @@ function updateOverlay() {
         // Set styles
         vehicleDiv.style.width = `${width}px`;
         vehicleDiv.style.height = `${height}px`;
-        vehicleDiv.style.backgroundColor = vehicle.color;
+        vehicleDiv.style.borderColor = vehicle.color;
 
         // Center the vehicle using transform
         vehicleDiv.style.left = '50%';
         vehicleDiv.style.top = '50%';
         vehicleDiv.style.transform = 'translate(-50%, -50%)';
 
-        // Add label
-        const label = document.createElement('div');
-        label.className = 'vehicle-label';
-        label.innerHTML = `
-            <span class="name">${vehicle.name}</span>
-            <span class="dimension">${vehicle.length.toLocaleString()}mm × ${vehicle.width.toLocaleString()}mm</span>
-        `;
-
-        vehicleDiv.appendChild(label);
         overlayContainer.appendChild(vehicleDiv);
+    });
+
+    // Update legend
+    updateLegend(selectedVehicles);
+}
+
+// Function to update the legend
+function updateLegend(vehicles) {
+    legendList.innerHTML = '';
+
+    vehicles.forEach(vehicle => {
+        const legendItem = document.createElement('div');
+        legendItem.className = 'legend-item';
+
+        const colorBox = document.createElement('div');
+        colorBox.className = 'legend-color';
+        colorBox.style.borderColor = vehicle.color;
+
+        const textSpan = document.createElement('span');
+        textSpan.className = 'legend-text';
+        textSpan.textContent = vehicle.name;
+
+        const dimsSpan = document.createElement('span');
+        dimsSpan.className = 'legend-dims';
+        dimsSpan.textContent = `${vehicle.length.toLocaleString()}mm × ${vehicle.width.toLocaleString()}mm`;
+
+        legendItem.appendChild(colorBox);
+        legendItem.appendChild(textSpan);
+        legendItem.appendChild(dimsSpan);
+        legendList.appendChild(legendItem);
     });
 }
 
