@@ -146,7 +146,8 @@ header p {
 /* Parking Spot */
 .parking-spot {
     position: absolute;
-    border: 3px dashed rgba(255, 255, 255, 0.6);
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.6);
     border-radius: 8px;
     box-sizing: border-box;
     pointer-events: none;

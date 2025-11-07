@@ -19,12 +19,18 @@ function calculateScale(vehicles, containerWidth, containerHeight) {
     if (vehicles.length === 0) return 0.04;
 
     // Swiss parking spot dimensions (in mm)
-    const parkingSpotLength = 5000;
-    const parkingSpotWidth = 2500;
+    // Interior: 4800mm x 2320mm, White line: 120mm (12cm)
+    const parkingSpotInteriorLength = 4800;
+    const parkingSpotInteriorWidth = 2320;
+    const whiteLineWidth = 120;
 
-    // Find the maximum dimensions among all selected vehicles and parking spot
-    const maxLength = Math.max(...vehicles.map(v => v.length), parkingSpotLength);
-    const maxWidth = Math.max(...vehicles.map(v => v.width), parkingSpotWidth);
+    // Total dimensions including white lines on both sides
+    const parkingSpotTotalLength = parkingSpotInteriorLength + (whiteLineWidth * 2);
+    const parkingSpotTotalWidth = parkingSpotInteriorWidth + (whiteLineWidth * 2);
+
+    // Find the maximum dimensions among all selected vehicles and parking spot (total)
+    const maxLength = Math.max(...vehicles.map(v => v.length), parkingSpotTotalLength);
+    const maxWidth = Math.max(...vehicles.map(v => v.width), parkingSpotTotalWidth);
 
     // Use 70% of container space to leave margins
     const usableWidth = containerWidth * 0.7;
@@ -74,11 +80,16 @@ function updateOverlay() {
     // Calculate dynamic scale
     const scale = calculateScale(selectedVehicles, containerWidth, containerHeight);
 
-    // Draw parking spot (Swiss standard: 5000mm x 2500mm)
+    // Draw parking spot (Swiss standard: interior 4800mm x 2320mm, white line 120mm)
+    const parkingSpotInteriorLength = 4800;
+    const parkingSpotInteriorWidth = 2320;
+    const whiteLineWidth = 120;
+
     const parkingSpot = document.createElement('div');
     parkingSpot.className = 'parking-spot';
-    parkingSpot.style.width = `${5000 * scale}px`;
-    parkingSpot.style.height = `${2500 * scale}px`;
+    parkingSpot.style.width = `${parkingSpotInteriorLength * scale}px`;
+    parkingSpot.style.height = `${parkingSpotInteriorWidth * scale}px`;
+    parkingSpot.style.borderWidth = `${whiteLineWidth * scale}px`;
     overlayContainer.appendChild(parkingSpot);
 
     // Create overlay for each selected vehicle
