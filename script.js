@@ -1,6 +1,3 @@
-// Scale: 1mm = 0.04px
-const SCALE = 0.04;
-
 // Get all checkboxes, overlay container, and legend elements
 const checkboxes = document.querySelectorAll('.vehicle-option input[type="checkbox"]');
 const overlayContainer = document.getElementById('overlay-container');
@@ -16,6 +13,26 @@ const vehicleNames = {
     'tesla-models': 'Tesla Model S 2024',
     'tesla-modelx': 'Tesla Model X'
 };
+
+// Function to calculate dynamic scale based on selected vehicles and container size
+function calculateScale(vehicles, containerWidth, containerHeight) {
+    if (vehicles.length === 0) return 0.04;
+
+    // Find the maximum dimensions among all selected vehicles
+    const maxLength = Math.max(...vehicles.map(v => v.length));
+    const maxWidth = Math.max(...vehicles.map(v => v.width));
+
+    // Use 70% of container space to leave margins
+    const usableWidth = containerWidth * 0.7;
+    const usableHeight = containerHeight * 0.7;
+
+    // Calculate scale factors for both dimensions
+    const scaleByLength = usableWidth / maxLength;
+    const scaleByWidth = usableHeight / maxWidth;
+
+    // Use the smaller scale to ensure everything fits
+    return Math.min(scaleByLength, scaleByWidth);
+}
 
 // Function to update the overlay view
 function updateOverlay() {
@@ -46,15 +63,22 @@ function updateOverlay() {
     // Show legend
     legend.style.display = 'block';
 
+    // Get container dimensions
+    const containerWidth = overlayContainer.clientWidth;
+    const containerHeight = overlayContainer.clientHeight;
+
+    // Calculate dynamic scale
+    const scale = calculateScale(selectedVehicles, containerWidth, containerHeight);
+
     // Create overlay for each selected vehicle
     selectedVehicles.forEach(vehicle => {
         const vehicleDiv = document.createElement('div');
         vehicleDiv.className = 'overlay-vehicle';
         vehicleDiv.id = `overlay-${vehicle.id}`;
 
-        // Calculate dimensions with scale
-        const width = vehicle.length * SCALE;
-        const height = vehicle.width * SCALE;
+        // Calculate dimensions with dynamic scale
+        const width = vehicle.length * scale;
+        const height = vehicle.width * scale;
 
         // Set styles
         vehicleDiv.style.width = `${width}px`;
@@ -103,6 +127,11 @@ function updateLegend(vehicles) {
 // Add event listeners to all checkboxes
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', updateOverlay);
+});
+
+// Add resize listener to recalculate scale on window resize
+window.addEventListener('resize', () => {
+    updateOverlay();
 });
 
 // Initialize the view
