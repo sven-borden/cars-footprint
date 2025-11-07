@@ -124,7 +124,10 @@ header p {
 
 .overlay-container {
     flex: 1;
-    background-color: white;
+    background-color: #4a4a4a;
+    background-image:
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -135,15 +138,27 @@ header p {
 }
 
 .empty-state {
-    color: #95a5a6;
+    color: #cccccc;
     font-size: 1.1rem;
     text-align: center;
+}
+
+/* Parking Spot */
+.parking-spot {
+    position: absolute;
+    border: 3px dashed rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    box-sizing: border-box;
+    pointer-events: none;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Overlay Vehicles */
 .overlay-vehicle {
     position: absolute;
-    border-radius: 16px;
+    border-radius: 64px;
     background-color: transparent;
     border-width: 3px;
     border-style: solid;
