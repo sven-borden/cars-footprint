@@ -11,5 +11,6 @@ const vehiclesData = [
     { id: 'polestar-2', name: 'Polestar 2', length: 4606, width: 1859, color: '#8e44ad' },
     { id: 'vw-id4', name: 'Volkswagen ID.4', length: 4584, width: 1852, color: '#27ae60' },
     { id: 'nissan-ariya', name: 'Nissan Ariya', length: 4595, width: 1850, color: '#c0392b' },
-    { id: 'citroen-c8', name: 'Citroen C8', length: 4727, width: 1854, color: '#34495e' }
+    { id: 'citroen-c8', name: 'Citroen C8', length: 4727, width: 1854, color: '#34495e' },
+    { id: 'porsche-cayenne-s-hybrid-2017', name: 'Porsche Cayenne S Hybrid 2017', length: 4855, width: 1939, color: '#d35400' }
 ];
