@@ -6,24 +6,40 @@ const vehicleListContainer = document.querySelector('.vehicle-list');
 
 // Vehicle data is loaded from vehicles-data.js
 
-// Populate the vehicle selection list
+// Populate the vehicle selection list grouped by brand
 function populateVehicleList() {
     vehicleListContainer.innerHTML = '';
 
-    vehiclesData.forEach(vehicle => {
-        const label = document.createElement('label');
-        label.className = 'vehicle-option';
+    // Iterate through each brand
+    Object.keys(vehiclesByBrand).sort().forEach(brand => {
+        // Create brand header
+        const brandHeader = document.createElement('div');
+        brandHeader.className = 'brand-header';
+        brandHeader.textContent = brand;
+        vehicleListContainer.appendChild(brandHeader);
 
-        label.innerHTML = `
-            <input type="checkbox" id="${vehicle.id}" value="${vehicle.id}"
-                   data-length="${vehicle.length}" data-width="${vehicle.width}"
-                   data-color="${vehicle.color}">
-            <span class="color-indicator" style="background-color: ${vehicle.color};"></span>
-            <span class="vehicle-name">${vehicle.name}</span>
-            <span class="vehicle-dims">${parseInt(vehicle.length).toLocaleString()}mm × ${parseInt(vehicle.width).toLocaleString()}mm</span>
-        `;
+        // Create brand group container
+        const brandGroup = document.createElement('div');
+        brandGroup.className = 'brand-group';
 
-        vehicleListContainer.appendChild(label);
+        // Add vehicles for this brand
+        vehiclesByBrand[brand].forEach(vehicle => {
+            const label = document.createElement('label');
+            label.className = 'vehicle-option';
+
+            label.innerHTML = `
+                <input type="checkbox" id="${vehicle.id}" value="${vehicle.id}"
+                       data-length="${vehicle.length}" data-width="${vehicle.width}"
+                       data-color="${vehicle.color}">
+                <span class="color-indicator" style="background-color: ${vehicle.color};"></span>
+                <span class="vehicle-name">${vehicle.name}</span>
+                <span class="vehicle-dims">${parseInt(vehicle.length).toLocaleString()}mm × ${parseInt(vehicle.width).toLocaleString()}mm</span>
+            `;
+
+            brandGroup.appendChild(label);
+        });
+
+        vehicleListContainer.appendChild(brandGroup);
     });
 }
 
