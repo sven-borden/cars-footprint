@@ -30,7 +30,8 @@ const vehiclesByBrand = {
     ],
     'Peugeot': [
         { id: 'peugeot-308', name: 'Peugeot 308', length: 4367, width: 1805, color: '#d35400' },
-        { id: 'peugeot-3008', name: 'Peugeot 3008', length: 4447, width: 1826, color: '#e67e22' }
+        { id: 'peugeot-3008', name: 'Peugeot 3008', length: 4447, width: 1826, color: '#e67e22' },
+        { id: 'peugeot-4007', name: 'Peugeot 4007', length: 4635, width: 1805, color: '#ca6f1e' }
     ],
     'Polestar': [
         { id: 'polestar-2', name: 'Polestar 2', length: 4606, width: 1859, color: '#7f8c8d' }
