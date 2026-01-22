@@ -62,6 +62,10 @@ const vehiclesByBrand = {
         { id: 'vw-passat', name: 'Volkswagen Passat', length: 4773, width: 1832, color: '#8e44ad' },
         { id: 'vw-tiguan', name: 'Volkswagen Tiguan', length: 4509, width: 1839, color: '#95a5a6' },
         { id: 'vw-id4', name: 'Volkswagen ID.4', length: 4584, width: 1852, color: '#7f8c8d' }
+    ],
+    'Xpeng': [
+        { id: 'xpeng-p7plus', name: 'Xpeng P7+ 2026', length: 5071, width: 1937, color: '#17a2b8' },
+        { id: 'xpeng-g6', name: 'Xpeng G6', length: 4753, width: 1920, color: '#6f42c1' }
     ]
 };
 
